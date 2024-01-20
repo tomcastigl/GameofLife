@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-from time  import sleep
+from time import sleep
 
 ALIVE_COLOR = (255, 255, 255)
 DEAD_COLOR = (0, 0, 0)
@@ -19,24 +19,25 @@ class World:
     def play(self):
         kill = False
         while not kill:
-            sleep(0.1)
+            sleep(0.05)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     kill = True
                     break
 
             self.update_world()
+        pygame.quit()
+
 
     def update_world(self):
-        new_grid = np.zeros((self.grid.shape[0], self.grid.shape[1]), dtype=np.bool)
-        for row in range(self.grid.shape[0]):
-            for col in range(self.grid.shape[1]):
-                n_neighbors = self.get_n_neighbors(row, col)
-                if self.grid[row, col] and (n_neighbors == 2 or n_neighbors == 3):
-                    new_grid[row, col] = True
-                elif not self.grid[row, col] and (n_neighbors == 3):
-                    new_grid[row, col] = True
-        self.grid = new_grid
+        extended_grid = np.pad(self.grid, pad_width=1, mode='wrap')
+        neighbors = np.sum(np.roll(np.roll(extended_grid, i, 0), j, 1)
+                        for i in (-1, 0, 1) for j in (-1, 0, 1)
+                        if (i, j) != (0, 0))
+
+        # Apply the Game of Life rules
+        neighbors = neighbors[1:-1, 1:-1]
+        self.grid = (neighbors == 3) | (self.grid & (neighbors == 2))
         self.draw_world()
 
     def draw_world(self):
@@ -85,57 +86,12 @@ class World:
         self.grid[x][y] = False
         self.window.fill(DEAD_COLOR, (y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE))
 
-    def get_n_neighbors(self, row, col):
-        n_neighbors = 0
-        if 0 < row < self.grid.shape[0] - 1 and 0 < col < self.grid.shape[1] - 1:
-            "middle of the grid"
-            for i in [-1, 0, 1]:
-                for j in [-1, 0, 1]:
-                    if i == j == 0:
-                        continue
-                    n_neighbors += self.grid[row + i, col + j]
-        elif row == 0 and col == 0:
-            "top left corner"
-            n_neighbors += self.grid[row, col + 1] + self.grid[row + 1, col] + self.grid[row + 1, col + 1]
-        elif row == 0 and col == self.grid.shape[1] - 1:
-            "top right corner"
-            n_neighbors += self.grid[row, col - 1] + self.grid[row + 1, col] + self.grid[row + 1, col - 1]
-        elif row == self.grid.shape[0] - 1 and col == 0:
-            "bottom left corner"
-            n_neighbors += self.grid[row, col + 1] + self.grid[row - 1, col] + self.grid[row - 1, col + 1]
-        elif row == self.grid.shape[0] - 1 and col == self.grid.shape[1] - 1:
-            "bottom right corner"
-            n_neighbors += self.grid[row, col - 1] + self.grid[row - 1, col] + self.grid[row - 1, col - 1]
-        elif row == 0:
-            "top row"
-            for i in [0, 1]:
-                for j in [-1, 0, 1]:
-                    if i == 0 and j == 0:
-                        continue
-                    n_neighbors += self.grid[row + i, col + j]
-        elif row == self.grid.shape[0] - 1:
-            "bottom row"
-            for i in [-1, 0]:
-                for j in [-1, 0, 1]:
-                    if i == 0 and j == 0:
-                        continue
-                    n_neighbors += self.grid[row + i, col + j]
-        elif col == 0:
-            "left column"
-            for i in [-1, 0, 1]:
-                for j in [0, 1]:
-                    if i == 0 and j == 0:
-                        continue
-                    n_neighbors += self.grid[row + i, col + j]
-        elif col == self.grid.shape[1] - 1:
-            "right column"
-            for i in [-1, 0, 1]:
-                for j in [-1, 0]:
-                    if i == 0 and j == 0:
-                        continue
-                    n_neighbors += self.grid[row + i, col + j]
 
-        else:
-            raise ValueError("Something went wrong in computing neighbors")
-        return n_neighbors
+    def get_n_neighbors(self, row, col):
+        row_start = max(row - 1, 0)
+        row_end = min(row + 2, self.grid.shape[0])
+        col_start = max(col - 1, 0)
+        col_end = min(col + 2, self.grid.shape[1])
+
+        return np.sum(self.grid[row_start:row_end, col_start:col_end]) - self.grid[row, col]
 

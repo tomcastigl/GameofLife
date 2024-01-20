@@ -6,7 +6,7 @@ def main():
 
     world = World(1000)
     world.play()
-    # pygame.quit()
+
 
 
 
