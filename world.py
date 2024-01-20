@@ -11,7 +11,6 @@ class World:
 
     def __init__(self, size):
         self.size = size
-
         self.grid = np.zeros((size // CELL_SIZE, size // CELL_SIZE), dtype=np.bool)
         self.build_world()
 
@@ -19,7 +18,7 @@ class World:
     def play(self):
         kill = False
         while not kill:
-            sleep(0.05)
+            sleep(0.1)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     kill = True
@@ -41,13 +40,15 @@ class World:
         self.draw_world()
 
     def draw_world(self):
-        for row in range(self.grid.shape[0]):
-            for col in range(self.grid.shape[1]):
-                if self.grid[row, col]:
-                    self.window.fill(ALIVE_COLOR, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                else:
-                    self.window.fill(DEAD_COLOR, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+        if not hasattr(self, 'previous_grid'):
+            self.previous_grid = np.zeros_like(self.grid)
 
+        changed_cells = np.argwhere(self.grid != self.previous_grid)
+        for row, col in changed_cells:
+            color = ALIVE_COLOR if self.grid[row, col] else DEAD_COLOR
+            self.window.fill(color, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+
+        self.previous_grid = np.copy(self.grid)
         pygame.display.update()
 
 
@@ -70,10 +71,10 @@ class World:
                     row = y // CELL_SIZE
                     col = x // CELL_SIZE
 
-                    if self.grid[row, col]:
-                        self.set_cell_dead(row, col)
-                    else:
+                    if event.button == pygame.BUTTON_LEFT:
                         self.set_cell_alive(row, col)
+                    elif event.button == pygame.BUTTON_RIGHT:
+                        self.set_cell_dead(row, col)
 
                 pygame.display.update()
 
