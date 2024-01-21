@@ -33,7 +33,7 @@ python main.py
 
 
 2. **Spaceships (Lightweight spaceship)**:
-
+<img src="imgs/spaceship.gif" width="200" height="200" alt="Alt text">
 □■■■■□  
 ■□□□■□  
 □□□□■□  
