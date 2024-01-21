@@ -39,7 +39,7 @@ python main.py
 <img src="imgs/Rpentomino.png" width="200" height="200" alt="Alt text">
 
 4. **Lidka** (29'200 gen):
-<img src="imgs/Lidka.png" width="200" height="200" alt="Alt text">
+<img src="imgs/Lidka.png" width="177" height="273" alt="Alt text">
 
 and my favorite: the **Pi-heptomino** (173 gen):  
 <img src="imgs/Piheptomino.png" width="200" height="200" alt="Alt text">
