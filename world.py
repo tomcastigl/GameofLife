@@ -80,10 +80,32 @@ class World:
         self.show_instructions()
         self.set_init_state()
 
+    def draw_grid(self):
+        """
+        Draws a simple grid for easier init state setup.
+        :return:
+        """
+        for x in range(0, self.size, CELL_SIZE):
+            pygame.draw.line(self.window, (150, 150, 150), (x, 0), (x, self.size))
+        for y in range(0, self.size, CELL_SIZE):
+            pygame.draw.line(self.window, (150, 150, 150), (0, y), (self.size, y))
+        pygame.display.update()
+
+    def remove_grid(self):
+        """
+        Removes the grid.
+        :return:
+        """
+        for row in range(self.grid.shape[0]):
+            for col in range(self.grid.shape[1]):
+                color = ALIVE_COLOR if self.grid[row, col] else DEAD_COLOR
+                self.window.fill(color, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+
     def set_init_state(self) -> None:
         """
         Set the initial state of the world, allowing the user to create living cells.
         """
+        self.draw_grid()
         finished = False
         while not finished:
             for event in pygame.event.get():
@@ -97,7 +119,7 @@ class World:
                     elif event.button == pygame.BUTTON_RIGHT:
                         self.set_cell_dead(row, col)
                 pygame.display.update()
-
+        self.remove_grid()
     def set_cell_alive(self, x: int, y: int) -> None:
         """
         Set a specific cell to alive.
