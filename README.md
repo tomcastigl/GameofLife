@@ -29,29 +29,14 @@ python main.py
 
 ## Cool Initial States to Try
 1. **Glider**:
-<img src="imgs/glider.png" width="200" height="200" alt="Alt text">
+<img src="imgs/glider.gif" width="200" height="200" alt="Alt text">
 
 
 2. **Spaceships (Lightweight spaceship)**:
 <img src="imgs/spaceship.gif" width="200" height="200" alt="Alt text">
-□■■■■□  
-■□□□■□  
-□□□□■□  
-■□□■□□  
-□□□□□□
 
-3. **Pulsar**:
+3. **R-pentamino**:
+<img src="imgs/Rpentomino.png" width="200" height="200" alt="Alt text">
 
-□□□■■■□□□■■■□□□  
-□□□□□□□□□□□□□□□  
-■□□□□■□□□■□□□□■  
-■□□□□■□□□■□□□□■  
-■□□□□■□□□■□□□□■  
-□□□■■■□□□■■■□□□  
-□□□□□□□□□□□□□□□  
-□□□■■■□□□■■■□□□  
-■□□□□■□□□■□□□□■  
-■□□□□■□□□■□□□□■  
-■□□□□■□□□■□□□□■  
-□□□□□□□□□□□□□□□  
-□□□■■■□□□■■■□□□  
+and my favorite: the **Pi-heptomino**:
+<img src="imgs/Piheptomino.png" width="200" height="200" alt="Alt text">
