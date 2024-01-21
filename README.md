@@ -38,5 +38,5 @@ python main.py
 3. **R-pentamino**:
 <img src="imgs/Rpentomino.png" width="200" height="200" alt="Alt text">
 
-and my favorite: the **Pi-heptomino**:
+and my favorite: the **Pi-heptomino**:  
 <img src="imgs/Piheptomino.png" width="200" height="200" alt="Alt text">
