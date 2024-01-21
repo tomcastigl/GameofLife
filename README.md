@@ -29,7 +29,7 @@ python main.py
 
 ## Cool Initial States to Try
 1. **Glider**:
-![glider](https://github.com/tomcastigl/GameofLife/imgs/glider.png)
+<img src="imgs/glider.png" width="200" height="200" alt="Alt text">
 
 
 2. **Spaceships (Lightweight spaceship)**:
