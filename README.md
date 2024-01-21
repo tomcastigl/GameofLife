@@ -35,8 +35,11 @@ python main.py
 2. **Spaceships (Lightweight spaceship)**:
 <img src="imgs/spaceship.gif" width="200" height="200" alt="Alt text">
 
-3. **R-pentamino**:
+3. **R-pentamino** (1'103 gen):
 <img src="imgs/Rpentomino.png" width="200" height="200" alt="Alt text">
 
-and my favorite: the **Pi-heptomino**:  
+4. **Lidka** (29'200 gen):
+<img src="imgs/Lidka.png" width="200" height="200" alt="Alt text">
+
+and my favorite: the **Pi-heptomino** (173 gen):  
 <img src="imgs/Piheptomino.png" width="200" height="200" alt="Alt text">
